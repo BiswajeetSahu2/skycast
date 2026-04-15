@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #d7d2cc, #304352);
+    transition: background 0.5s ease;
+}
+
+/* ── Topbar: search + theme toggle side by side at same height ── */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 20px;
+    /* subtle frosted strip so it doesn't float over content awkwardly */
+    background: rgba(0,0,0,0.08);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* Search wrapper takes all remaining space between toggle */
+.topbar .search-wrapper {
+    flex: 1;
+    max-width: 460px;
+    position: relative;
+    z-index: 20;
+}
+
+/* ── Background tint layer ── */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.06);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── Grass strip ── */
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    background: linear-gradient(to top, #2d5a27 20%, transparent);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* ── Pokémon ── */
+.pokemon {
+    position: fixed;
+    bottom: 80px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* ── Card above static layers ── */
+.card {
+    z-index: 10;
+}
+
+/* .app sits below the fixed topbar */
+.app {
+    margin-top: 76px;  /* topbar height ~76px */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* ── States ── */
+body.state-initial .card   { display: none; }
+body.state-loaded  .card   { display: flex; }
+
+body.state-search .card {
+    filter: blur(6px);
+    opacity: 0.6;
+    pointer-events: none;
+}
+body.state-search .topbar {
+    z-index: 300;
+}
+
+:root {
+    --bg-primary: #0f172a;
+    --glass: rgba(255,255,255,0.1);
+    --border: rgba(255,255,255,0.2);
+    --radius: 16px;
+}

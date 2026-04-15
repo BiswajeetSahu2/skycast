@@ -1,0 +1,61 @@
+/* ── Weather condition backgrounds ── */
+body.clear  { background: linear-gradient(135deg, #c9a84c, #7b9ea8); }
+body.clouds { background: linear-gradient(135deg, #d7d2cc, #304352); }
+body.rain   { background: linear-gradient(135deg, #4b79a1, #283e51); }
+body.mist   { background: linear-gradient(135deg, #757f9a, #d7dde8); }
+body.snow   { background: linear-gradient(135deg, #e6dada, #274046); }
+
+/* ── Light theme: force black text everywhere for readability ── */
+body:not(.dark) .card,
+body:not(.dark) .card p,
+body:not(.dark) .card h1,
+body:not(.dark) .card h2,
+body:not(.dark) .card span,
+body:not(.dark) .unit-label,
+body:not(.dark) .placeholder {
+    color: #111 !important;
+}
+
+body:not(.dark) .card {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255,255,255,0.5);
+}
+
+/* ── Dark mode ── */
+body.dark {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+body.dark .card {
+    background: rgba(20, 25, 40, 0.5);
+    border-color: rgba(255,255,255,0.12);
+    color: #fff;
+}
+
+/* ── Theme toggle button ── */
+#themeToggle {
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    backdrop-filter: blur(8px);
+}
+
+#themeToggle:hover {
+    transform: scale(1.12);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+body:not(.dark) #themeToggle {
+    background: rgba(0, 0, 0, 0.12);
+    color: #333;
+    border-color: rgba(0,0,0,0.1);
+}
