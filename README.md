@@ -1,28 +1,32 @@
-# Weather App
+# SkyCast — Full-Stack Weather App
 
-A simple weather application that fetches real-time weather data based on user input.
-
-## Features
-
-* Search weather by city name
-* Displays temperature, humidity, and wind speed
-* Error handling for invalid city names
+A production-style weather application built with React and Spring Boot.
 
 ## Tech Stack
 
-* HTML
-* CSS
-* JavaScript
-* OpenWeather API
+**Frontend:** React 18, Vite, Custom Hooks, CSS  
+**Backend:** Spring Boot 3.2, Java 17, Spring Cache  
+**API:** OpenWeatherMap (weather + forecast + geocoding)
 
-## How to Run
+## Features
 
-1. Clone the repository
-2. Open `index.html` in your browser
+- Real-time weather by city search or auto-detected location
+- 5-day forecast with precipitation probability
+- Hourly temperature chart
+- City autocomplete with arrow-key navigation
+- Recent searches with delete (localStorage)
+- Dark / Light theme toggle
+- Celsius / Fahrenheit unit switch
+- Backend proxies API key — never exposed to frontend
+- In-memory caching on backend (Spring Cache)
 
-## Future Improvements
-
-* Add 5-day forecast
-* Add geolocation support
-* Improve UI/UX
-* Add loading animations
+## Architecture
+React (localhost:5173)
+└── services/api.js
+└── GET /api/weather?city=
+└── GET /api/forecast?city=
+↓
+Spring Boot (localhost:8080)
+└── WeatherController
+└── WeatherService  ← caches results
+└── OpenWeatherMap API

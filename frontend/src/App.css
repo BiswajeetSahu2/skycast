@@ -1,0 +1,26 @@
+body { background: #0f172a; color: #fff; transition: background 0.3s, color 0.3s; margin: 0; }
+body.light { background: #f0f4f8; color: #111; }
+
+.app { display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 40px 20px 60px; gap: 0; }
+.app-title { font-size: 2.4rem; font-weight: 800; margin-bottom: 24px; letter-spacing: 1px; }
+
+/* Before search: centered layout */
+.search-container { width: 100%; max-width: 520px; margin-bottom: 32px; }
+
+/* After search: search bar locks to top */
+.search-fixed {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+}
+
+/* Push results below the fixed bar */
+.has-results .results-area { margin-top: 80px; }
+
+.results-area { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+
+.error-box { max-width: 480px; width: 100%; padding: 14px 20px; background: rgba(255,80,80,0.15); border: 1px solid rgba(255,80,80,0.35); border-radius: 12px; color: #ff8a80; text-align: center; }
+body.light .error-box { background: rgba(200,0,0,0.08); border-color: rgba(200,0,0,0.2); color: #c00; }
+.loading-text { opacity: 0.5; font-size: 14px; }

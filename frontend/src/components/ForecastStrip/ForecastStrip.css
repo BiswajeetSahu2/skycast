@@ -1,0 +1,106 @@
+.forecast-strip {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px 24px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.forecast-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 16px;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+}
+
+.forecast-day:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.forecast-day-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.forecast-icon {
+  width: 44px;
+  height: 44px;
+}
+
+.forecast-temp {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.forecast-rain {
+  font-size: 11px;
+  color: #81d4fa;
+}
+
+.forecast-loading {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  text-align: center;
+}
+
+body.light .forecast-strip {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light .forecast-title {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+body.light .forecast-day {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+body.light .forecast-day:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+body.light .forecast-day-name {
+  color: rgba(0, 0, 0, 0.55);
+}
+
+body.light .forecast-temp {
+  color: #111;
+}
+
+body.light .forecast-rain {
+  color: #0277bd;
+}
+
+body.light .forecast-loading {
+  color: rgba(0, 0, 0, 0.4);
+}

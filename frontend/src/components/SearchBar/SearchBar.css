@@ -1,0 +1,222 @@
+/* ── Wrapper holds input + dropdown together ── */
+.searchbar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  z-index: 50;
+}
+
+/* ── Input row ── */
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  padding: 6px 8px 6px 20px;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.2s;
+}
+
+.searchbar:focus-within {
+  border-color: rgba(79, 195, 247, 0.7);
+}
+
+/* Light mode */
+body.light .searchbar {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+body.light .searchbar:focus-within {
+  border-color: rgba(2, 120, 180, 0.5);
+}
+
+/* ── Text input ── */
+.searchbar-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: #fff;
+  min-width: 0;
+}
+
+.searchbar-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Light mode input */
+body.light .searchbar-input {
+  color: #111;
+}
+
+body.light .searchbar-input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.searchbar-input:disabled {
+  opacity: 0.6;
+}
+
+/* ── Clear (x) button ── */
+.searchbar-clear {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.searchbar-clear:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+body.light .searchbar-clear        { color: rgba(0,0,0,0.35); }
+body.light .searchbar-clear:hover  { color: rgba(0,0,0,0.7); }
+
+/* ── Icon buttons (geo + search) ── */
+.searchbar-btn {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.geo-btn {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.geo-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+}
+
+body.light .geo-btn        { background: rgba(0,0,0,0.07); }
+body.light .geo-btn:hover  { background: rgba(0,0,0,0.14); }
+
+.search-btn {
+  background: #4fc3f7;
+  color: #000;
+}
+
+.search-btn:hover:not(:disabled) {
+  background: #81d4fa;
+  transform: scale(1.05);
+}
+
+.searchbar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Dropdown */
+.searchbar-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  animation: dropIn 0.15s ease;
+
+  /* Dark default */
+  background: rgba(15, 20, 35, 0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(16px);
+  color: #fff;
+}
+
+body.light .searchbar-dropdown {
+  background: rgba(255,255,255,0.97);
+  border-color: rgba(0,0,0,0.1);
+  color: #111;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Section label */
+.dropdown-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 4px 16px 6px;
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Each row */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.12s;
+  font-size: 14px;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+  background: rgba(255,255,255,0.08);
+}
+
+body.light .dropdown-item:hover,
+body.light .dropdown-item.active {
+  background: rgba(0,0,0,0.06);
+}
+
+.dropdown-icon {
+  font-size: 14px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.dropdown-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Delete recent button */
+.dropdown-remove {
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.35;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.dropdown-remove:hover {
+  opacity: 0.8;
+}
