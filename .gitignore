@@ -8,6 +8,7 @@ weather-backend/target/
 
 # ── Secrets — NEVER commit these ──────
 backend/src/main/resources/application.properties
+backend/src/main/resources/application-local.properties
 
 # ── React / Node ──────────────────────
 frontend/node_modules/
