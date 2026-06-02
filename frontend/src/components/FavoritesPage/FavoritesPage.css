@@ -1,0 +1,132 @@
+.favorites-page {
+  width: 100%;
+  padding: 12px;
+  margin-top: var(--sky-nav-height);
+}
+
+.favorites-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.favorites-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin: 0;
+  color: var(--sky-text);
+}
+
+.favorites-header p {
+  margin: 0;
+  color: var(--sky-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.favorites-error {
+  margin-bottom: 12px;
+}
+
+.favorite-card {
+  position: relative;
+  min-height: 132px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.favorite-open {
+  width: 100%;
+  min-height: 132px;
+  border: 0;
+  background: var(--sky-surface-hover);
+  color: var(--sky-text);
+  border-radius: inherit;
+  padding: 16px 12px 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.favorite-open:hover {
+  background: var(--sky-accent-dim);
+}
+
+.favorite-flag {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.favorite-city {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--sky-text);
+}
+
+.favorite-country {
+  font-size: 12px;
+  color: var(--sky-muted);
+  font-weight: 700;
+}
+
+.favorite-temp {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--sky-accent);
+}
+
+.favorite-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--sky-border-strong);
+  background: var(--sky-surface);
+  color: var(--sky-muted);
+  cursor: pointer;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.favorites-empty {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  color: var(--sky-muted);
+}
+
+.favorites-empty-heart {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--sky-accent);
+  display: inline-grid;
+  place-items: center;
+}
+
+.favorites-empty-heart img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}

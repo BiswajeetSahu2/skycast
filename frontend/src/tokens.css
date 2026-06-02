@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --font-display        : 'Outfit', sans-serif;
+  --font-body           : 'DM Sans', sans-serif;
+
+  --sky-radius          : 16px;
+  --sky-radius-sm       : 10px;
+  --palette-speed       : 0.5s;
+
+  --aqi-good            : #22c55e;
+  --aqi-moderate        : #facc15;
+  --aqi-unhealthy       : #f97316;
+  --aqi-very-unhealthy  : #ef4444;
+  --aqi-hazardous       : #a855f7;
+
+  --sky-bg              : #080c14;
+  --sky-surface         : #0d1320;
+  --sky-surface-solid   : #0d1320;
+  --sky-surface-hover   : #121929;
+  --sky-nav-bg          : rgba(8, 12, 20, 0.88);
+  --sky-drop-bg         : #0d1320;
+
+  --sky-accent          : #3b9eff;
+  --sky-accent-dim      : rgba(59, 158, 255, 0.10);
+  --sky-accent-glow     : rgba(59, 158, 255, 0.20);
+
+  --sky-border          : rgba(59, 158, 255, 0.12);
+  --sky-border-strong   : rgba(59, 158, 255, 0.22);
+
+  --sky-text            : #e8edf5;
+  --sky-muted           : #6b7fa0;
+  --sky-hint            : #3d4f6b;
+  --sky-sun             : #fbbf24;
+
+  --sky-icon-filter     : brightness(0.9) saturate(1.1);
+}
+
+body.light {
+  --sky-bg              : #fdf5e6;
+  --sky-surface         : #fffbf2;
+  --sky-surface-solid   : #fffbf2;
+  --sky-surface-hover   : #ffefd6;
+  --sky-nav-bg          : rgba(253, 245, 230, 0.92);
+  --sky-drop-bg         : #fffbf2;
+
+  --sky-accent          : #b91c1c;
+  --sky-accent-dim      : rgba(185, 28, 28, 0.10);
+  --sky-accent-glow     : rgba(185, 28, 28, 0.18);
+
+  --sky-border          : rgba(0, 0, 0, 0.09);
+  --sky-border-strong   : rgba(0, 0, 0, 0.16);
+
+  --sky-text            : #1a0a00;
+  --sky-muted           : #7c3a1c;
+  --sky-hint            : #c4845a;
+  --sky-sun             : #d97706;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="sunny"] {
+  --sky-bg              : #fffbe8;
+  --sky-surface         : #ffffff;
+  --sky-surface-solid   : #ffffff;
+  --sky-surface-hover   : #fff3c4;
+  --sky-nav-bg          : rgba(255, 251, 232, 0.94);
+  --sky-drop-bg         : #ffffff;
+
+  --sky-accent          : #ea6c00;
+  --sky-accent-dim      : rgba(234, 108, 0, 0.11);
+  --sky-accent-glow     : rgba(234, 108, 0, 0.22);
+
+  --sky-border          : rgba(0, 0, 0, 0.08);
+  --sky-border-strong   : rgba(0, 0, 0, 0.15);
+
+  --sky-text            : #1a0e00;
+  --sky-muted           : #9a5400;
+  --sky-hint            : #d4a000;
+  --sky-sun             : #f59e0b;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="rain"] {
+  --sky-bg              : #f2eeff;
+  --sky-surface         : #fdfbff;
+  --sky-surface-solid   : #fdfbff;
+  --sky-surface-hover   : #e8e0ff;
+  --sky-nav-bg          : rgba(242, 238, 255, 0.94);
+  --sky-drop-bg         : #fdfbff;
+
+  --sky-accent          : #0891b2;
+  --sky-accent-dim      : rgba(8, 145, 178, 0.12);
+  --sky-accent-glow     : rgba(8, 145, 178, 0.22);
+
+  --sky-border          : rgba(0, 0, 0, 0.08);
+  --sky-border-strong   : rgba(0, 0, 0, 0.14);
+
+  --sky-text            : #0c001e;
+  --sky-muted           : #5b21b6;
+  --sky-hint            : #9c6fe4;
+  --sky-sun             : #d97706;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="cloudy"] {
+  --sky-bg              : #fdf5e6;
+  --sky-surface         : #fffbf2;
+  --sky-surface-solid   : #fffbf2;
+  --sky-surface-hover   : #ffefd6;
+  --sky-nav-bg          : rgba(253, 245, 230, 0.92);
+  --sky-drop-bg         : #fffbf2;
+
+  --sky-accent          : #b91c1c;
+  --sky-accent-dim      : rgba(185, 28, 28, 0.10);
+  --sky-accent-glow     : rgba(185, 28, 28, 0.18);
+
+  --sky-border          : rgba(0, 0, 0, 0.09);
+  --sky-border-strong   : rgba(0, 0, 0, 0.16);
+
+  --sky-text            : #1a0a00;
+  --sky-muted           : #7c3a1c;
+  --sky-hint            : #c4845a;
+  --sky-sun             : #d97706;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="night"] {
+  --sky-bg              : #fce8f3;
+  --sky-surface         : #fff5fb;
+  --sky-surface-solid   : #fff5fb;
+  --sky-surface-hover   : #ffd6ee;
+  --sky-nav-bg          : rgba(252, 232, 243, 0.94);
+  --sky-drop-bg         : #fff5fb;
+
+  --sky-accent          : #db2777;
+  --sky-accent-dim      : rgba(219, 39, 119, 0.11);
+  --sky-accent-glow     : rgba(219, 39, 119, 0.22);
+
+  --sky-border          : rgba(0, 0, 0, 0.08);
+  --sky-border-strong   : rgba(0, 0, 0, 0.15);
+
+  --sky-text            : #1a0010;
+  --sky-muted           : #9d174d;
+  --sky-hint            : #ec4899;
+  --sky-sun             : #d97706;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="thunder"] {
+  --sky-bg              : #eeeeff;
+  --sky-surface         : #f8f8ff;
+  --sky-surface-solid   : #f8f8ff;
+  --sky-surface-hover   : #e0e0ff;
+  --sky-nav-bg          : rgba(238, 238, 255, 0.94);
+  --sky-drop-bg         : #f8f8ff;
+
+  --sky-accent          : #4338ca;
+  --sky-accent-dim      : rgba(67, 56, 202, 0.11);
+  --sky-accent-glow     : rgba(67, 56, 202, 0.22);
+
+  --sky-border          : rgba(0, 0, 0, 0.08);
+  --sky-border-strong   : rgba(0, 0, 0, 0.14);
+
+  --sky-text            : #0a0820;
+  --sky-muted           : #3730a3;
+  --sky-hint            : #818cf8;
+  --sky-sun             : #d97706;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="windy"] {
+  --sky-bg              : #fff8ed;
+  --sky-surface         : #ffffff;
+  --sky-surface-solid   : #ffffff;
+  --sky-surface-hover   : #ffefd6;
+  --sky-nav-bg          : rgba(255, 248, 237, 0.94);
+  --sky-drop-bg         : #ffffff;
+
+  --sky-accent          : #c2230a;
+  --sky-accent-dim      : rgba(194, 35, 10, 0.10);
+  --sky-accent-glow     : rgba(194, 35, 10, 0.20);
+
+  --sky-border          : rgba(0, 0, 0, 0.08);
+  --sky-border-strong   : rgba(0, 0, 0, 0.15);
+
+  --sky-text            : #1a0700;
+  --sky-muted           : #92350a;
+  --sky-hint            : #d4701a;
+  --sky-sun             : #f59e0b;
+
+  --sky-icon-filter     : none;
+}
+
+body.light[data-palette="snow"] {
+  --sky-bg              : #edf8ff;
+  --sky-surface         : #ffffff;
+  --sky-surface-solid   : #ffffff;
+  --sky-surface-hover   : #d6eeff;
+  --sky-nav-bg          : rgba(237, 248, 255, 0.94);
+  --sky-drop-bg         : #ffffff;
+
+  --sky-accent          : #0369a1;
+  --sky-accent-dim      : rgba(3, 105, 161, 0.11);
+  --sky-accent-glow     : rgba(3, 105, 161, 0.22);
+
+  --sky-border          : rgba(0, 0, 0, 0.08);
+  --sky-border-strong   : rgba(0, 0, 0, 0.14);
+
+  --sky-text            : #071829;
+  --sky-muted           : #0c4a6e;
+  --sky-hint            : #38bdf8;
+  --sky-sun             : #d97706;
+
+  --sky-icon-filter     : none;
+}

@@ -1,74 +1,50 @@
-/* ── Wrapper holds input + dropdown together ── */
 .searchbar-wrapper {
   position: relative;
   width: 100%;
-  max-width: 520px;
   z-index: 50;
 }
 
-/* ── Input row ── */
 .searchbar {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--sky-surface);
+  border: 1px solid var(--sky-border-strong);
   border-radius: 50px;
-  padding: 6px 8px 6px 20px;
-  backdrop-filter: blur(12px);
-  transition: border-color 0.2s;
+  padding: 6px 8px 6px 18px;
+  transition: border-color 0.2s, background 0.35s;
 }
 
 .searchbar:focus-within {
-  border-color: rgba(79, 195, 247, 0.7);
+  border-color: var(--sky-accent);
 }
 
-/* Light mode */
-body.light .searchbar {
-  background: rgba(0, 0, 0, 0.06);
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light .searchbar:focus-within {
-  border-color: rgba(2, 120, 180, 0.5);
-}
-
-/* ── Text input ── */
 .searchbar-input {
   flex: 1;
   background: transparent;
   border: none;
   outline: none;
-  font-size: 15px;
-  font-weight: 500;
-  font-family: inherit;
-  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var(--font-body);
+  color: var(--sky-text);
   min-width: 0;
+  transition: color 0.35s;
 }
 
 .searchbar-input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-/* Light mode input */
-body.light .searchbar-input {
-  color: #111;
-}
-
-body.light .searchbar-input::placeholder {
-  color: rgba(0, 0, 0, 0.35);
+  color: var(--sky-muted);
 }
 
 .searchbar-input:disabled {
   opacity: 0.6;
 }
 
-/* ── Clear (x) button ── */
 .searchbar-clear {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 12px;
+  color: var(--sky-muted);
+  font-size: 11px;
   cursor: pointer;
   padding: 0 4px;
   line-height: 1;
@@ -76,21 +52,17 @@ body.light .searchbar-input::placeholder {
 }
 
 .searchbar-clear:hover {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--sky-text);
 }
 
-body.light .searchbar-clear        { color: rgba(0,0,0,0.35); }
-body.light .searchbar-clear:hover  { color: rgba(0,0,0,0.7); }
-
-/* ── Icon buttons (geo + search) ── */
 .searchbar-btn {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,125 +70,180 @@ body.light .searchbar-clear:hover  { color: rgba(0,0,0,0.7); }
 }
 
 .geo-btn {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
+  background: var(--sky-surface-hover);
+  color: var(--sky-text);
 }
 
 .geo-btn:hover:not(:disabled) {
-  background: rgba(255,255,255,0.2);
+  background: var(--sky-border);
   transform: scale(1.05);
 }
 
-body.light .geo-btn        { background: rgba(0,0,0,0.07); }
-body.light .geo-btn:hover  { background: rgba(0,0,0,0.14); }
-
 .search-btn {
-  background: #4fc3f7;
-  color: #000;
+  background: var(--sky-accent);
+  color: #fff;
+  font-size: 13px;
 }
 
 .search-btn:hover:not(:disabled) {
-  background: #81d4fa;
+  opacity: 0.88;
   transform: scale(1.05);
 }
 
 .searchbar-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-/* Dropdown */
+.searchbar-wrapper.compact .searchbar {
+  padding: 4px 6px 4px 14px;
+}
+
+.searchbar-wrapper.compact .searchbar-input {
+  font-size: 13px;
+}
+
+.searchbar-wrapper.compact .searchbar-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+}
+
 .searchbar-dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 6px);
   left: 0;
-  right: 0;
+  width: 100%;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
   list-style: none;
   margin: 0;
   padding: 6px 0;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  animation: dropIn 0.15s ease;
-
-  /* Dark default */
-  background: rgba(15, 20, 35, 0.95);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(16px);
-  color: #fff;
+  border-radius: 14px;
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22), 0 2px 10px rgba(0, 0, 0, 0.04);
+  animation: dropIn 0.14s ease;
+  background: var(--sky-drop-bg);
+  border: 1px solid var(--sky-border-strong);
+  color: var(--sky-text);
+  z-index: 100;
 }
 
-body.light .searchbar-dropdown {
-  background: rgba(255,255,255,0.97);
-  border-color: rgba(0,0,0,0.1);
-  color: #111;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+.searchbar-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.searchbar-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.searchbar-dropdown::-webkit-scrollbar-thumb {
+  background: var(--sky-border-strong);
+  border-radius: 999px;
+}
+
+.searchbar-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--sky-accent);
 }
 
 @keyframes dropIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Section label */
 .dropdown-label {
+  text-align: center;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   padding: 4px 16px 6px;
-  opacity: 0.45;
+  color: var(--sky-muted);
   cursor: default;
+  font-family: var(--font-display);
 }
 
-/* Each row */
 .dropdown-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
+  margin: 2px 8px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: background 0.12s;
-  font-size: 14px;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.12s ease;
+  font-size: 13.5px;
+  color: var(--sky-text);
 }
 
-.dropdown-item:hover,
+.border-item:not(:last-child) {
+  border-bottom: none;
+}
+
+.dropdown-item:hover:not(.active) {
+  background: var(--sky-surface-hover);
+}
+
 .dropdown-item.active {
-  background: rgba(255,255,255,0.08);
+  background: var(--sky-accent);
+  color: white;
+  transform: scale(1.01);
 }
 
-body.light .dropdown-item:hover,
-body.light .dropdown-item.active {
-  background: rgba(0,0,0,0.06);
+.dropdown-item.active .dropdown-text,
+.dropdown-item.active .dropdown-icon,
+.dropdown-item.active .dropdown-remove {
+  color: white;
+  opacity: 1;
 }
 
 .dropdown-icon {
-  font-size: 14px;
-  opacity: 0.7;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.55;
   flex-shrink: 0;
 }
 
 .dropdown-text {
   flex: 1;
   white-space: nowrap;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: inherit;
+  font-weight: 500;
 }
 
-/* Delete recent button */
 .dropdown-remove {
   background: none;
   border: none;
-  color: inherit;
-  opacity: 0.35;
-  font-size: 11px;
+  color: var(--sky-muted);
+  opacity: 0.55;
+  font-size: 10px;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 2px 5px;
   border-radius: 4px;
-  transition: opacity 0.15s;
+  transition: opacity 0.15s ease, background 0.15s ease;
   flex-shrink: 0;
 }
 
 .dropdown-remove:hover {
-  opacity: 0.8;
+  opacity: 1;
+  background: var(--sky-surface-hover);
 }

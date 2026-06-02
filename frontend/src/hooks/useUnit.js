@@ -1,11 +1,3 @@
-// hooks/useUnit.js
-//
-// Manages the Celsius/Fahrenheit preference.
-// Provides a conversion function so any component
-// can display the correct unit.
-//
-// Returns: { isFahrenheit, toggleUnit, convertTemp, unitLabel }
-
 import { useState } from 'react';
 
 export function useUnit() {
@@ -16,7 +8,6 @@ export function useUnit() {
     setIsFahrenheit(prev => !prev);
   }
 
-  // Pass any Celsius value — get back the right number + symbol
   function convertTemp(celsius) {
     if (celsius == null) return '';
     if (isFahrenheit) {

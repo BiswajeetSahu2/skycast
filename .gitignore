@@ -1,4 +1,4 @@
-# ── Java / Maven ──────────────────────
+# Java / Maven
 backend/target/
 weather-backend/target/
 *.class
@@ -6,18 +6,27 @@ weather-backend/target/
 *.war
 *.log
 
-# ── Secrets — NEVER commit these ──────
-backend/src/main/resources/application.properties
+# Local backend secrets
 backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-*.local.properties
+backend/src/main/resources/*.secret.properties
 
-# ── React / Node ──────────────────────
+# React / Node
 frontend/node_modules/
 frontend/dist/
 frontend/.env
+frontend/.env.*
+!frontend/.env.example
 
-# ── IDE / OS ──────────────────────────
+# Tool caches
+frontend/node_modules/.vite/
+frontend/node_modules/.vite-temp/
+.eslintcache
+
+# IDE / OS
 .vscode/settings.json
 .idea/
 *.iml
 .DS_Store
 Thumbs.db
+

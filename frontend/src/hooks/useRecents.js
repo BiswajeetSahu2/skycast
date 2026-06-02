@@ -1,4 +1,3 @@
-// hooks/useRecents.js
 import { useState } from 'react';
 
 const KEY      = 'weather_recents';

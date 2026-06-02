@@ -1,0 +1,249 @@
+.hourly-view {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hv-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hv-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--sky-text);
+}
+
+.hv-subtitle {
+  font-size: 13px;
+  color: var(--sky-muted);
+  margin-top: 3px;
+  text-transform: capitalize;
+}
+
+.hv-summary-stats {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.hv-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hv-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--sky-muted);
+  font-weight: 600;
+  font-family: var(--font-display);
+  white-space: nowrap;
+}
+
+.hv-stat-val {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--sky-text);
+}
+
+.hv-sparkline-card {
+  padding: 18px 20px 10px;
+  overflow: hidden;
+}
+
+.hv-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--sky-muted);
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+}
+
+.sparkline-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.sparkline-svg {
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+}
+
+.sparkline-axis {
+  position: relative;
+  height: 20px;
+  margin-top: 4px;
+}
+
+.sparkline-tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--sky-muted);
+  font-family: var(--font-display);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hv-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+.hv-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 14px 8px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.15s;
+  cursor: default;
+}
+
+.hv-slot:hover {
+  border-color: var(--sky-border-strong);
+  transform: translateY(-2px);
+}
+
+.hv-slot.now {
+  border-color: var(--sky-accent);
+  background: var(--sky-accent-dim);
+}
+
+.hv-slot-time {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sky-muted);
+}
+
+.hv-slot.now .hv-slot-time {
+  color: var(--sky-accent);
+}
+
+.hv-icon {
+  width: 38px;
+  height: 38px;
+  filter: var(--sky-icon-filter);
+}
+
+.hv-icon.hv-sun,
+.hv-icon.hv-moon {
+  filter: none;
+}
+
+.hv-slot-temp {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sky-text);
+}
+
+.hv-slot-feels {
+  font-size: 10px;
+  color: var(--sky-hint);
+  margin-top: 2px;
+}
+
+.hv-slot-rain {
+  font-size: 12px;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-top: 2px;
+}
+
+.hv-slot-wind {
+  font-size: 10px;
+  color: var(--sky-muted);
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+body.light .hv-slot-rain {
+  color: #ea580c;
+}
+
+.hv-slot-feels {
+  font-size: 10px;
+  color: var(--sky-hint);
+}
+
+.hv-loading {
+  color: var(--sky-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .hv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+body.light .hourly-view {
+  color: #2a1a12;
+}
+
+body.light .hv-sparkline-card {
+  background: #fbf8f2;
+}
+
+body.light .hv-grid {
+  gap: 12px;
+}
+
+body.light .hv-slot {
+  background: #fffdf8;
+
+  border: 1px solid rgba(160, 120, 70, 0.12);
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.03),
+    0 4px 18px rgba(120, 90, 40, 0.04);
+}
+
+body.light .hv-slot.now {
+  background:
+    linear-gradient(180deg,
+      rgba(194, 65, 12, 0.10),
+      rgba(194, 65, 12, 0.04));
+
+  border-color: rgba(194, 65, 12, 0.30);
+}
+
+body.light .hv-stat-val,
+body.light .hv-slot-temp,
+body.light .hv-title {
+  color: #2a1a12;
+}

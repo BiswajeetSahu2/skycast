@@ -21,84 +21,74 @@
 
     <properties>
         <java.version>21</java.version>
+        <lombok.version>1.18.32</lombok.version>
     </properties>
 
     <dependencies>
-
-        <!--
-            DEPENDENCY 1: spring-boot-starter-web
-            ───────────────────────────────────────
-            WHY: This is the core of our backend.
-            It gives us:
-              - Embedded Tomcat server (no external server needed)
-              - Spring MVC (for @RestController, @GetMapping etc.)
-              - RestTemplate (to call OpenWeather API from our backend)
-              - Jackson (to auto-convert Java objects to/from JSON)
-
-            Without this, we cannot build REST APIs at all.
-        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--
-            DEPENDENCY 2: spring-boot-starter-validation
-            ─────────────────────────────────────────────
-            WHY: Lets us validate incoming request parameters.
-            Example: @NotBlank on city name so if someone calls
-            /api/weather?city=  (blank), we return a proper error
-            instead of sending a bad request to OpenWeather.
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
 
-            Used with @Valid, @NotBlank, @Size annotations.
-        -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.12.3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.12.3</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!--
-            DEPENDENCY 3: lombok
-            ─────────────────────
-            WHY: Eliminates boilerplate Java code.
-            Instead of writing 50 lines of getters/setters/constructors
-            for every DTO, we write one annotation:
-              @Data      → generates getters + setters
-              @Builder   → generates builder pattern
-              @NoArgsConstructor / @AllArgsConstructor → constructors
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
-            This is optional but used in all production Spring Boot projects.
-            If you prefer not to use it, you can write getters/setters manually.
-        -->
+        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
             <optional>true</optional>
         </dependency>
 
-        <!--
-            DEPENDENCY 4: spring-boot-starter-cache
-            ─────────────────────────────────────────
-            WHY: Prepares the caching infrastructure for Phase B.
-            In Phase A it does nothing visible, but adding it now means
-            when we add @Cacheable to WeatherService later, it just works.
 
-            Caching prevents us from calling OpenWeather API every single
-            time — instead we return the cached response for 10 minutes.
-            This saves API quota and makes responses instant.
-        -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
-        <!--
-            TEST DEPENDENCY
-            ────────────────
-            WHY: Standard Spring Boot testing.
-            Includes JUnit 5 + Mockito.
-            Used to write unit tests for WeatherService.
-        -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -109,18 +99,30 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
 
-            <!--
-                Spring Boot Maven Plugin
-                ─────────────────────────
-                WHY: Lets you run the app with: mvn spring-boot:run
-                Also packages it as a single executable JAR.
-            -->
+            
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!-- Exclude Lombok from the final JAR (only needed at compile time) -->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -129,7 +131,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 
