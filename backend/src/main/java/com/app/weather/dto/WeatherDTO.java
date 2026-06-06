@@ -27,6 +27,14 @@ public class WeatherDTO {
 
     private double  windSpeed;
     private int     windDeg;
+    /** -1 when OpenWeather does not report gust speed. */
+    private double  windGust;
+
+    /** -999 when unavailable; frontend treats as missing. */
+    private double  dewPoint;
+    private int     clouds;
+    /** -1 when One Call API is unavailable; frontend treats as missing. */
+    private double  uvi;
 
     private double  rainLastHour;
     private double  snowLastHour;

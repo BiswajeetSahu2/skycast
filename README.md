@@ -64,6 +64,8 @@ Note: the forgot-password and email-verification flows currently return tokens f
 
 ## Project Structure
 
+For a full chapter-by-chapter guide to architecture, data flow, and algorithms, see **[docs/SKYCAST_GUIDE.md](docs/SKYCAST_GUIDE.md)**.
+
 ```text
 weather-app/
   backend/

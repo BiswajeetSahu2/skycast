@@ -1,6 +1,7 @@
 import PokemonMascot from '../PokemonMascot/PokemonMascot.jsx';
 import './MainWeatherCard.css';
 import { getWeatherIcon } from '../../utils/weatherIcons';
+import { getGuardianCardTheme } from '../PokemonMascot/PokemonMap.js';
 import heartRed from '../../assets/heart-red.svg';
 import heartWhite from '../../assets/heart-white.svg';
 
@@ -21,8 +22,19 @@ export default function MainWeatherCard({
     weather.icon
   );
 
+  const guardianTheme = getGuardianCardTheme(
+    `${weather.condition || ''} ${weather.description || ''}`,
+    weather.icon,
+    weather.temperature,
+    weather.windSpeed,
+    rainChance
+  );
+
   return (
-    <div className="main-weather-card glass-card">
+    <div
+      className={`main-weather-card glass-card guardian-card guardian-${guardianTheme.guardian.key}`}
+      style={guardianTheme.style}
+    >
 
       <div className="mwc-left">
 
@@ -128,6 +140,8 @@ export default function MainWeatherCard({
             icon={weather.icon}
             temperature={weather.temperature}
             country={weather.country}
+            windSpeed={weather.windSpeed}
+            rainChance={rainChance}
           />
 
         </div>

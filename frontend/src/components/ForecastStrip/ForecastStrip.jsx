@@ -1,20 +1,33 @@
 import { useState, useEffect } from 'react';
 import { fetchForecast } from '../../services/api.js';
+import { getWeatherIcon } from '../../utils/weatherIcons.js';
 import './ForecastStrip.css';
 
+// OpenWeather icon prefix -> condition label (shared with HourlyView).
+const conditionByIcon = {
+  '01': 'clear',
+  '02': 'few clouds',
+  '03': 'clouds',
+  '04': 'clouds',
+  '09': 'drizzle',
+  '10': 'rain',
+  '11': 'thunderstorm',
+  '13': 'snow',
+  '50': 'mist',
+};
+
 function ForecastIcon({ icon, condition }) {
-  if (icon === '01d') return (
-    <svg className="forecast-icon forecast-sun" viewBox="0 0 44 44" fill="none">
-      <circle cx="22" cy="22" r="10" fill="#fbbf24"/>
-      {[0,60,120,180,240,300].map((deg,i)=>{const r=deg*Math.PI/180,x1=22+13*Math.cos(r),y1=22+13*Math.sin(r),x2=22+18*Math.cos(r),y2=22+18*Math.sin(r);return<line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round"/>;})}
-    </svg>
+  const iconKey = icon?.slice(0, 2);
+  const resolvedCondition = conditionByIcon[iconKey] || condition?.toLowerCase() || 'clouds';
+  const src = getWeatherIcon(resolvedCondition, icon);
+
+  return (
+    <img
+      className="forecast-icon"
+      src={src}
+      alt={condition}
+    />
   );
-  if (icon === '01n') return (
-    <svg className="forecast-icon" viewBox="0 0 44 44" fill="none">
-      <path d="M28 10a14 14 0 11-14 24A10 10 0 0028 10z" fill="#c7d2fe"/>
-    </svg>
-  );
-  return <img className="forecast-icon" src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt={condition}/>;
 }
 
 export default function ForecastStrip({ city, convertTemp, onRainChance, onHourlyData }) {
@@ -22,20 +35,27 @@ export default function ForecastStrip({ city, convertTemp, onRainChance, onHourl
   const [loading, setLoading]   = useState(false);
 
   useEffect(() => {
-    if (!city) return;
-    setLoading(true);
-    setForecast(null);
-    fetchForecast(city)
-      .then(data => {
+    (async () => {
+      if (!city) return;
+      setLoading(true);
+      setForecast(null);
+      
+      try {
+        const data = await fetchForecast(city);
         setForecast(data);
-        if (onRainChance && data.hourlySlots?.length)
+        if (onRainChance && data.hourlySlots?.length) {
           onRainChance(data.hourlySlots[0].precipitationChance);
-        if (onHourlyData && data.hourlySlots?.length)
+        }
+        if (onHourlyData && data.hourlySlots?.length) {
           onHourlyData(data.hourlySlots);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [city]);
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [city, onRainChance, onHourlyData]);
 
   if (loading) return (
     <div className="forecast-card glass-card">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useWeather } from './hooks/useWeather.js';
 import { useTheme } from './hooks/useTheme.js';
 import { useUnit } from './hooks/useUnit.js';
@@ -31,7 +31,7 @@ export default function App() {
   const { recents, addRecent, removeRecent } = useRecents();
   const auth = useAuth();
 
-  const palette = useWeatherPalette(weather?.condition, weather?.icon, weather?.windSpeed);
+  useWeatherPalette(weather?.condition, weather?.icon, weather?.windSpeed);
 
   const [rainChance, setRainChance] = useState(null);
   const [hourlyData, setHourlyData] = useState([]);
@@ -43,11 +43,18 @@ export default function App() {
 
   function handleSearch(city) {
     addRecent(city);
+    // Clear forecast cache so HourlyView does not show the previous city.
+    setRainChance(null);
+    setHourlyData([]);
     searchWeather(city);
     setActiveTab('today');
   }
 
   function handleLogoClick() {
+    setActiveTab('today');
+    setFavoriteError('');
+    setRainChance(null);
+    setHourlyData([]);
     if (clearWeather) clearWeather();
   }
 
@@ -57,6 +64,8 @@ export default function App() {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
+          setRainChance(null);
+          setHourlyData([]);
           const data = await fetchWeatherByCoords(pos.coords.latitude, pos.coords.longitude);
           addRecent(data.city);
           searchWeather(data.city);
@@ -76,20 +85,23 @@ export default function App() {
   }, [activeTab]);
 
   useEffect(() => {
-    if (!auth.accessToken) {
-      setFavorites([]);
-      return;
-    }
-    fetchFavorites(auth.accessToken)
-      .then(setFavorites)
-      .catch(() => setFavorites([]));
-  }, [auth.accessToken]);
+    (async () => {
+      if (!hasResults && activeTab === 'hourly') {
+        setActiveTab('today');
+      }
+    })();
+  }, [activeTab, hasResults]);
 
-  const isCurrentFavorite = !!weather && favorites.some(
-    favorite => favorite.city.toLowerCase() === weather.city.toLowerCase()
-  );
+  useEffect(() => {
+    (async () => {
+      if (!auth.user && activeTab === 'favorites') {
+        setActiveTab('today');
+      }
+    })();
+  }, [activeTab, auth.user]);
 
-  async function runWithFreshToken(action) {
+  // Retry with a refreshed token on 401/403 — stored access tokens expire between visits.
+  const runWithFreshToken = useCallback(async (action) => {
     try {
       return await action(auth.accessToken);
     } catch (e) {
@@ -100,7 +112,41 @@ export default function App() {
       const freshToken = await auth.refreshAccessToken();
       return action(freshToken);
     }
-  }
+  }, [auth]);
+
+  const loadFavorites = useCallback(async () => {
+    // Access tokens from localStorage expire; runWithFreshToken refreshes before giving up.
+    if (!auth.accessToken) {
+      setFavorites([]);
+      return;
+    }
+
+    try {
+      const list = await runWithFreshToken(token => fetchFavorites(token));
+      setFavorites(Array.isArray(list) ? list : []);
+    } catch {
+      setFavorites([]);
+    }
+  }, [auth.accessToken, runWithFreshToken]);
+
+  useEffect(() => {
+    (async () => {
+      await loadFavorites();
+    })();
+  }, [loadFavorites]);
+
+  // Re-fetch when opening Favorites so the list is fresh even if the initial load failed.
+  useEffect(() => {
+    (async () => {
+      if (activeTab === 'favorites' && auth.accessToken) {
+        await loadFavorites();
+      }
+    })();
+  }, [activeTab, auth.accessToken, loadFavorites]);
+
+  const isCurrentFavorite = !!weather && favorites.some(
+    favorite => favorite.city.toLowerCase() === weather.city.toLowerCase()
+  );
 
   async function handleToggleFavorite() {
     if (!weather) return;
@@ -120,6 +166,7 @@ export default function App() {
 
     try {
       if (isCurrentFavorite) {
+        // Optimistic remove — revert via loadFavorites() in catch if the API fails.
         setFavorites(prev => prev.filter(favorite => favorite.city.toLowerCase() !== cityKey));
         await runWithFreshToken(token => removeFavorite(token, weather.city));
         setFavorites(prev => prev.filter(favorite => favorite.city.toLowerCase() !== cityKey));
@@ -138,11 +185,7 @@ export default function App() {
         ]);
       }
     } catch (e) {
-      if (isCurrentFavorite) {
-        fetchFavorites(auth.accessToken).then(setFavorites).catch(() => {});
-      } else {
-        setFavorites(prev => prev.filter(favorite => favorite.city.toLowerCase() !== cityKey));
-      }
+      await loadFavorites();
       setFavoriteError(e.message || 'Could not update favorite');
       if (e.status === 401 || e.status === 403) {
         setAuthMode('login');
@@ -199,6 +242,7 @@ export default function App() {
       {favoriteError && <ErrorToast message={favoriteError} onClose={() => setFavoriteError('')} />}
 
       {!hasResults && !isFavoritesView ? (
+        // Hero search is shown when there is no weather yet; Favorites still uses main layout below.
         <div className="hero-wrapper">
           <section className="hero-section">
             <h1 className="hero-title">Sky<span>Cast</span></h1>
@@ -238,7 +282,7 @@ export default function App() {
 
               <div className="today-column">
                 <div className="grid-details">
-                  <DetailsCard weather={weather} convertTemp={convertTemp} sunOnly={true} />
+                  <DetailsCard weather={weather} convertTemp={convertTemp} />
                 </div>
 
                 <div className="grid-aqi">
@@ -259,6 +303,7 @@ export default function App() {
               convertTemp={convertTemp}
               isFahrenheit={isFahrenheit}
               weather={weather}
+              hourlySlots={hourlyData}
             />
           )}
 

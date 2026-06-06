@@ -1,178 +1,239 @@
-// official high-res artwork from PokéAPI:
-// https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{id}.png
-
-const CONTINENT = {
-  // Asia
-  IN:'asia', CN:'asia', JP:'asia', KR:'asia', TH:'asia', VN:'asia',
-  ID:'asia', MY:'asia', PH:'asia', SG:'asia', BD:'asia', PK:'asia',
-  NP:'asia', LK:'asia', MM:'asia', KH:'asia', LA:'asia', AF:'asia',
-  // Europe
-  GB:'europe', FR:'europe', DE:'europe', IT:'europe', ES:'europe',
-  PT:'europe', NL:'europe', BE:'europe', CH:'europe', AT:'europe',
-  PL:'europe', SE:'europe', NO:'europe', DK:'europe', FI:'europe',
-  RU:'europe', UA:'europe', CZ:'europe', HU:'europe', RO:'europe',
-  // Americas
-  US:'americas', CA:'americas', MX:'americas', BR:'americas',
-  AR:'americas', CO:'americas', CL:'americas', PE:'americas',
-  VE:'americas', EC:'americas', BO:'americas', PY:'americas',
-  // Africa
-  ZA:'africa', NG:'africa', KE:'africa', GH:'africa', ET:'africa',
-  TZ:'africa', EG:'africa', MA:'africa', CI:'africa', SN:'africa',
-  // Oceania
-  AU:'oceania', NZ:'oceania', PG:'oceania', FJ:'oceania',
+const GUARDIANS = {
+  sunny: {
+    id: 250,
+    name: 'Ho-Oh',
+    type: 'Fire/Flying',
+    weather: 'Sunny',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #fff4bb 0%, #ffd36b 48%, #f59e0b 100%)',
+      darkBg: 'linear-gradient(135deg, #3a2105 0%, #8a4b08 52%, #f59e0b 100%)',
+      accent: '#f59e0b',
+      accent2: '#ffd166',
+      textLight: '#241204',
+      textDark: '#fff7d6',
+      mutedLight: '#7a4305',
+      mutedDark: '#ffd98a',
+      glow: 'rgba(245, 158, 11, 0.32)',
+    },
+  },
+  partlyCloudy: {
+    id: 334,
+    name: 'Altaria',
+    type: 'Dragon/Flying',
+    weather: 'Partly Cloudy',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #fafdff 0%, #dff3ff 50%, #8fd0f4 100%)',
+      darkBg: 'linear-gradient(135deg, #0b2236 0%, #1f5d7d 52%, #bfe9ff 100%)',
+      accent: '#38bdf8',
+      accent2: '#f8fbff',
+      textLight: '#082033',
+      textDark: '#eefaff',
+      mutedLight: '#2f6f8d',
+      mutedDark: '#b9e7ff',
+      glow: 'rgba(56, 189, 248, 0.28)',
+    },
+  },
+  rain: {
+    id: 788,
+    name: 'Tapu Fini',
+    type: 'Water/Fairy',
+    weather: 'Rain',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #e7fbff 0%, #9be8f1 48%, #06b6d4 100%)',
+      darkBg: 'linear-gradient(135deg, #052c36 0%, #075f72 50%, #22d3ee 100%)',
+      accent: '#06b6d4',
+      accent2: '#67e8f9',
+      textLight: '#04242c',
+      textDark: '#ecfeff',
+      mutedLight: '#0e7490',
+      mutedDark: '#a5f3fc',
+      glow: 'rgba(6, 182, 212, 0.30)',
+    },
+  },
+  heavyRain: {
+    id: 384,
+    name: 'Rayquaza',
+    type: 'Dragon/Flying',
+    weather: 'Heavy Rain',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #dffcf0 0%, #52d1a1 48%, #047857 100%)',
+      darkBg: 'linear-gradient(135deg, #04251d 0%, #065f46 50%, #14b887 100%)',
+      accent: '#10b981',
+      accent2: '#2dd4bf',
+      textLight: '#041d16',
+      textDark: '#ecfdf5',
+      mutedLight: '#065f46',
+      mutedDark: '#99f6e4',
+      glow: 'rgba(16, 185, 129, 0.30)',
+    },
+  },
+  thunderstorm: {
+    id: 25,
+    name: 'Pikachu',
+    type: 'Electric',
+    weather: 'Thunderstorm',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #fff7ad 0%, #fde047 45%, #38bdf8 100%)',
+      darkBg: 'linear-gradient(135deg, #302701 0%, #856e08 48%, #0369a1 100%)',
+      accent: '#facc15',
+      accent2: '#38bdf8',
+      textLight: '#1f1a02',
+      textDark: '#fffbd1',
+      mutedLight: '#7c6503',
+      mutedDark: '#e0f2fe',
+      glow: 'rgba(250, 204, 21, 0.34)',
+    },
+  },
+  snow: {
+    id: 10104,
+    name: 'Alolan Ninetales',
+    type: 'Ice/Fairy',
+    weather: 'Snow',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #f8fdff 0%, #dbeafe 50%, #94a3b8 100%)',
+      darkBg: 'linear-gradient(135deg, #071827 0%, #256b8f 52%, #d7ecff 100%)',
+      accent: '#7dd3fc',
+      accent2: '#cbd5e1',
+      textLight: '#0f2638',
+      textDark: '#f8fbff',
+      mutedLight: '#45647a',
+      mutedDark: '#dbeafe',
+      glow: 'rgba(125, 211, 252, 0.30)',
+    },
+  },
+  fog: {
+    id: 245,
+    name: 'Suicune',
+    type: 'Water',
+    weather: 'Fog',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #eef6ff 0%, #c7d2fe 50%, #a78bfa 100%)',
+      darkBg: 'linear-gradient(135deg, #101a33 0%, #31518f 52%, #a78bfa 100%)',
+      accent: '#60a5fa',
+      accent2: '#c4b5fd',
+      textLight: '#111b35',
+      textDark: '#eef4ff',
+      mutedLight: '#4f46a3',
+      mutedDark: '#d8b4fe',
+      glow: 'rgba(96, 165, 250, 0.28)',
+    },
+  },
+  windy: {
+    id: 249,
+    name: 'Lugia',
+    type: 'Psychic/Flying',
+    weather: 'Windy',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #ffffff 0%, #dbeafe 50%, #1e3a8a 100%)',
+      darkBg: 'linear-gradient(135deg, #071226 0%, #1d4f8f 54%, #f8fbff 100%)',
+      accent: '#1d4ed8',
+      accent2: '#ffffff',
+      textLight: '#071226',
+      textDark: '#f8fbff',
+      mutedLight: '#1e3a8a',
+      mutedDark: '#dbeafe',
+      glow: 'rgba(29, 78, 216, 0.28)',
+    },
+  },
+  extremeHeat: {
+    id: 10078,
+    name: 'Primal Groudon',
+    type: 'Ground/Fire',
+    weather: 'Extreme Heat',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #fff1dd 0%, #fb6f22 48%, #7f0f0f 100%)',
+      darkBg: 'linear-gradient(135deg, #2b0505 0%, #8f1d12 50%, #fb6f22 100%)',
+      accent: '#ef4444',
+      accent2: '#fb923c',
+      textLight: '#230606',
+      textDark: '#fff1e7',
+      mutedLight: '#8a2b10',
+      mutedDark: '#fed7aa',
+      glow: 'rgba(239, 68, 68, 0.34)',
+    },
+  },
+  dust: {
+    id: 248,
+    name: 'Tyranitar',
+    type: 'Rock/Dark',
+    weather: 'Dust/Haze',
+    palette: {
+      lightBg: 'linear-gradient(135deg, #fff3d8 0%, #c9b477 50%, #6b7b35 100%)',
+      darkBg: 'linear-gradient(135deg, #1d2111 0%, #5d6530 52%, #d5bd7a 100%)',
+      accent: '#7c8a35',
+      accent2: '#d6b56d',
+      textLight: '#1d1a0b',
+      textDark: '#fff6d8',
+      mutedLight: '#656022',
+      mutedDark: '#e7d49a',
+      glow: 'rgba(124, 138, 53, 0.30)',
+    },
+  },
 };
 
-const COUNTRY_NAME_TO_CODE = {
-  afghanistan: 'AF',
-  argentina: 'AR',
-  australia: 'AU',
-  bangladesh: 'BD',
-  brazil: 'BR',
-  canada: 'CA',
-  china: 'CN',
-  egypt: 'EG',
-  france: 'FR',
-  germany: 'DE',
-  ghana: 'GH',
-  india: 'IN',
-  indonesia: 'ID',
-  italy: 'IT',
-  japan: 'JP',
-  kenya: 'KE',
-  malaysia: 'MY',
-  mexico: 'MX',
-  nepal: 'NP',
-  'new zealand': 'NZ',
-  nigeria: 'NG',
-  pakistan: 'PK',
-  philippines: 'PH',
-  russia: 'RU',
-  singapore: 'SG',
-  'south africa': 'ZA',
-  'south korea': 'KR',
-  spain: 'ES',
-  'sri lanka': 'LK',
-  thailand: 'TH',
-  'united kingdom': 'GB',
-  'united states': 'US',
-  usa: 'US',
-  vietnam: 'VN',
-};
-
-function getContinent(country) {
-  const normalized = country?.trim();
-  if (!normalized) return 'asia';
-
-  const code = normalized.length === 2
-    ? normalized.toUpperCase()
-    : COUNTRY_NAME_TO_CODE[normalized.toLowerCase()];
-
-  return CONTINENT[code] || 'asia';
-}
-
-function getConditionKey(condition, icon) {
+function classifyGuardian(condition, icon, tempCelsius, windSpeed, rainChance) {
   const c = (condition || '').toLowerCase();
   const isNight = icon?.endsWith('n');
-  if (c.includes('thunder') || c.includes('storm')) return 'thunder';
-  if (c.includes('snow') || c.includes('blizzard'))  return 'snow';
-  if (c.includes('rain') || c.includes('drizzle'))   return 'rain';
-  if (c.includes('fog') || c.includes('mist') || c.includes('haze')) return 'fog';
-  if (c.includes('cloud') || c.includes('overcast')) return 'cloud';
-  if (c.includes('clear') || c.includes('sun'))      return isNight ? 'night' : 'clear';
-  return 'clear';
+  const wind = Number(windSpeed) || 0;
+  const pop = Number(rainChance) || 0;
+  const isCloudy = c.includes('cloud') || c.includes('overcast');
+  const isRain = c.includes('rain') || c.includes('drizzle') || c.includes('shower');
+  const isHeavyRain = isRain && (
+    c.includes('heavy') ||
+    c.includes('intense') ||
+    c.includes('extreme') ||
+    c.includes('storm rain') ||
+    wind >= 30 ||
+    pop >= 70
+  );
+
+  if (c.includes('thunder') || c.includes('lightning')) return 'thunderstorm';
+  if (c.includes('snow') || c.includes('blizzard') || c.includes('sleet')) return 'snow';
+  if (c.includes('dust') || c.includes('sand') || c.includes('haze') || c.includes('smoke') || c.includes('ash')) return 'dust';
+  if (c.includes('fog') || c.includes('mist')) return 'fog';
+  if (tempCelsius >= 42 || c.includes('heat')) return 'extremeHeat';
+  if (isHeavyRain) return 'heavyRain';
+  if (isRain) return 'rain';
+  if (wind >= 35 || c.includes('squall') || c.includes('tornado') || c.includes('wind')) return 'windy';
+  if (isCloudy || icon?.startsWith('02') || icon?.startsWith('03') || icon?.startsWith('04')) return 'partlyCloudy';
+  if (c.includes('clear') || c.includes('sun') || isNight) return 'sunny';
+  return 'sunny';
 }
 
-function getTempBand(celsius) {
-  if (celsius <= 0)  return 'freezing';
-  if (celsius <= 10) return 'cold';
-  if (celsius <= 20) return 'mild';
-  if (celsius <= 30) return 'warm';
-  return 'hot';
+function getGuardian(condition, icon, tempCelsius, windSpeed, rainChance) {
+  const key = classifyGuardian(condition, icon, tempCelsius, windSpeed, rainChance);
+  return { key, ...GUARDIANS[key] };
 }
 
-// Format: [id, name, type-hint]
-// id = national dex number for PokéAPI official artwork URL
+export function getGuardianCardTheme(condition, icon, tempCelsius, windSpeed, rainChance) {
+  const guardian = getGuardian(condition, icon, tempCelsius, windSpeed, rainChance);
+  const palette = guardian.palette;
 
-const POKEMON_TABLE = {
-  // THUNDER
-  thunder: {
-    asia:     { freezing:[871,'Arctozolt','Electric/Ice'], cold:[694,'Helioptile','Electric'], mild:[135,'Jolteon','Electric'], warm:[25,'Pikachu','Electric'], hot:[145,'Zapdos','Electric/Flying'] },
-    europe:   { freezing:[871,'Arctozolt','Electric/Ice'], cold:[125,'Electabuzz','Electric'], mild:[135,'Jolteon','Electric'], warm:[777,'Togedemaru','Electric'], hot:[145,'Zapdos','Electric/Flying'] },
-    americas: { freezing:[871,'Arctozolt','Electric/Ice'], cold:[125,'Electabuzz','Electric'], mild:[309,'Electrike','Electric'], warm:[587,'Emolga','Electric/Flying'], hot:[145,'Zapdos','Electric/Flying'] },
-    africa:   { freezing:[694,'Helioptile','Electric'], cold:[309,'Electrike','Electric'], mild:[25,'Pikachu','Electric'], warm:[595,'Joltik','Bug/Electric'], hot:[145,'Zapdos','Electric/Flying'] },
-    oceania:  { freezing:[871,'Arctozolt','Electric/Ice'], cold:[694,'Helioptile','Electric'], mild:[135,'Jolteon','Electric'], warm:[25,'Pikachu','Electric'], hot:[145,'Zapdos','Electric/Flying'] },
-  },
-
-  // SNOW
-  snow: {
-    asia:     { freezing:[473,'Mamoswine','Ice/Ground'], cold:[361,'Snorunt','Ice'], mild:[872,'Snom','Ice/Bug'], warm:[872,'Snom','Ice/Bug'], hot:[872,'Snom','Ice/Bug'] },
-    europe:   { freezing:[131,'Lapras','Water/Ice'], cold:[220,'Swinub','Ice/Ground'], mild:[361,'Snorunt','Ice'], warm:[361,'Snorunt','Ice'], hot:[361,'Snorunt','Ice'] },
-    americas: { freezing:[473,'Mamoswine','Ice/Ground'], cold:[124,'Jynx','Ice/Psychic'], mild:[220,'Swinub','Ice/Ground'], warm:[220,'Swinub','Ice/Ground'], hot:[220,'Swinub','Ice/Ground'] },
-    africa:   { freezing:[473,'Mamoswine','Ice/Ground'], cold:[361,'Snorunt','Ice'], mild:[361,'Snorunt','Ice'], warm:[872,'Snom','Ice/Bug'], hot:[872,'Snom','Ice/Bug'] },
-    oceania:  { freezing:[131,'Lapras','Water/Ice'], cold:[220,'Swinub','Ice/Ground'], mild:[361,'Snorunt','Ice'], warm:[361,'Snorunt','Ice'], hot:[361,'Snorunt','Ice'] },
-  },
-
-  // RAIN
-  rain: {
-    asia:     { freezing:[131,'Lapras','Water/Ice'], cold:[54,'Psyduck','Water'], mild:[349,'Feebas','Water'], warm:[816,'Sobble','Water'], hot:[422,'Shellos','Water'] },
-    europe:   { freezing:[131,'Lapras','Water/Ice'], cold:[54,'Psyduck','Water'], mild:[194,'Wooper','Water/Ground'], warm:[816,'Sobble','Water'], hot:[271,'Lombre','Water/Grass'] },
-    americas: { freezing:[131,'Lapras','Water/Ice'], cold:[194,'Wooper','Water/Ground'], mild:[349,'Feebas','Water'], warm:[816,'Sobble','Water'], hot:[422,'Shellos','Water'] },
-    africa:   { freezing:[131,'Lapras','Water/Ice'], cold:[54,'Psyduck','Water'], mild:[349,'Feebas','Water'], warm:[422,'Shellos','Water'], hot:[138,'Omanyte','Rock/Water'] },
-    oceania:  { freezing:[131,'Lapras','Water/Ice'], cold:[54,'Psyduck','Water'], mild:[350,'Milotic','Water'], warm:[816,'Sobble','Water'], hot:[422,'Shellos','Water'] },
-  },
-
-  // FOG / MIST
-  fog: {
-    asia:     { freezing:[358,'Chimecho','Psychic'], cold:[353,'Shuppet','Ghost'], mild:[355,'Duskull','Ghost'], warm:[200,'Misdreavus','Ghost'], hot:[200,'Misdreavus','Ghost'] },
-    europe:   { freezing:[358,'Chimecho','Psychic'], cold:[353,'Shuppet','Ghost'], mild:[292,'Shedinja','Bug/Ghost'], warm:[200,'Misdreavus','Ghost'], hot:[200,'Misdreavus','Ghost'] },
-    americas: { freezing:[353,'Shuppet','Ghost'], cold:[355,'Duskull','Ghost'], mild:[292,'Shedinja','Bug/Ghost'], warm:[200,'Misdreavus','Ghost'], hot:[200,'Misdreavus','Ghost'] },
-    africa:   { freezing:[353,'Shuppet','Ghost'], cold:[355,'Duskull','Ghost'], mild:[200,'Misdreavus','Ghost'], warm:[200,'Misdreavus','Ghost'], hot:[200,'Misdreavus','Ghost'] },
-    oceania:  { freezing:[358,'Chimecho','Psychic'], cold:[353,'Shuppet','Ghost'], mild:[355,'Duskull','Ghost'], warm:[200,'Misdreavus','Ghost'], hot:[200,'Misdreavus','Ghost'] },
-  },
-
-  // CLOUDY / OVERCAST
-  cloud: {
-    asia:     { freezing:[361,'Snorunt','Ice'], cold:[333,'Swablu','Normal/Flying'], mild:[396,'Starly','Normal/Flying'], warm:[16,'Pidgey','Normal/Flying'], hot:[636,'Larvesta','Bug/Fire'] },
-    europe:   { freezing:[361,'Snorunt','Ice'], cold:[333,'Swablu','Normal/Flying'], mild:[396,'Starly','Normal/Flying'], warm:[821,'Rookidee','Flying'], hot:[821,'Rookidee','Flying'] },
-    americas: { freezing:[333,'Swablu','Normal/Flying'], cold:[396,'Starly','Normal/Flying'], mild:[661,'Fletchling','Normal/Flying'], warm:[16,'Pidgey','Normal/Flying'], hot:[636,'Larvesta','Bug/Fire'] },
-    africa:   { freezing:[333,'Swablu','Normal/Flying'], cold:[333,'Swablu','Normal/Flying'], mild:[16,'Pidgey','Normal/Flying'], warm:[16,'Pidgey','Normal/Flying'], hot:[636,'Larvesta','Bug/Fire'] },
-    oceania:  { freezing:[333,'Swablu','Normal/Flying'], cold:[333,'Swablu','Normal/Flying'], mild:[396,'Starly','Normal/Flying'], warm:[821,'Rookidee','Flying'], hot:[821,'Rookidee','Flying'] },
-  },
-
-  // CLEAR DAY
-  clear: {
-    asia:     { freezing:[471,'Glaceon','Ice'], cold:[470,'Leafeon','Grass'], mild:[133,'Eevee','Normal'], warm:[6,'Charizard','Fire/Flying'], hot:[78,'Rapidash','Fire'] },
-    europe:   { freezing:[471,'Glaceon','Ice'], cold:[470,'Leafeon','Grass'], mild:[133,'Eevee','Normal'], warm:[6,'Charizard','Fire/Flying'], hot:[38,'Ninetales','Fire'] },
-    americas: { freezing:[471,'Glaceon','Ice'], cold:[470,'Leafeon','Grass'], mild:[133,'Eevee','Normal'], warm:[6,'Charizard','Fire/Flying'], hot:[244,'Entei','Fire'] },
-    africa:   { freezing:[471,'Glaceon','Ice'], cold:[470,'Leafeon','Grass'], mild:[470,'Leafeon','Grass'], warm:[244,'Entei','Fire'], hot:[78,'Rapidash','Fire'] },
-    oceania:  { freezing:[471,'Glaceon','Ice'], cold:[333,'Swablu','Normal/Flying'], mild:[133,'Eevee','Normal'], warm:[6,'Charizard','Fire/Flying'], hot:[78,'Rapidash','Fire'] },
-  },
-
-  // CLEAR NIGHT
-  night: {
-    asia:     { freezing:[471,'Glaceon','Ice'], cold:[197,'Umbreon','Dark'], mild:[196,'Espeon','Psychic'], warm:[197,'Umbreon','Dark'], hot:[197,'Umbreon','Dark'] },
-    europe:   { freezing:[471,'Glaceon','Ice'], cold:[197,'Umbreon','Dark'], mild:[196,'Espeon','Psychic'], warm:[197,'Umbreon','Dark'], hot:[197,'Umbreon','Dark'] },
-    americas: { freezing:[471,'Glaceon','Ice'], cold:[197,'Umbreon','Dark'], mild:[197,'Umbreon','Dark'], warm:[197,'Umbreon','Dark'], hot:[197,'Umbreon','Dark'] },
-    africa:   { freezing:[197,'Umbreon','Dark'], cold:[197,'Umbreon','Dark'], mild:[197,'Umbreon','Dark'], warm:[197,'Umbreon','Dark'], hot:[197,'Umbreon','Dark'] },
-    oceania:  { freezing:[471,'Glaceon','Ice'], cold:[197,'Umbreon','Dark'], mild:[196,'Espeon','Psychic'], warm:[197,'Umbreon','Dark'], hot:[197,'Umbreon','Dark'] },
-  },
-};
-
-export function getPokemon(condition, icon, tempCelsius, country) {
-  const condKey  = getConditionKey(condition, icon);
-  const continent = getContinent(country);
-  const tempBand = getTempBand(tempCelsius);
-
-  const byContinent = POKEMON_TABLE[condKey]?.[continent]
-                   || POKEMON_TABLE[condKey]?.['asia'];
-  const entry = byContinent?.[tempBand] || [133, 'Eevee', 'Normal'];
-
-  const [id, name, type] = entry;
   return {
-    id,
-    name,
-    type,
-    artworkUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-    spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+    guardian,
+    style: {
+      '--guardian-bg-light': palette.lightBg,
+      '--guardian-bg-dark': palette.darkBg,
+      '--guardian-accent': palette.accent,
+      '--guardian-accent-2': palette.accent2,
+      '--guardian-text-light': palette.textLight,
+      '--guardian-text-dark': palette.textDark,
+      '--guardian-muted-light': palette.mutedLight,
+      '--guardian-muted-dark': palette.mutedDark,
+      '--guardian-glow': palette.glow,
+    },
+  };
+}
+
+export function getPokemon(condition, icon, tempCelsius, country, windSpeed, rainChance) {
+  const guardian = getGuardian(condition, icon, tempCelsius, windSpeed, rainChance);
+
+  return {
+    id: guardian.id,
+    name: guardian.name,
+    type: guardian.type,
+    weather: guardian.weather,
+    artworkUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${guardian.id}.png`,
+    spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${guardian.id}.png`,
   };
 }

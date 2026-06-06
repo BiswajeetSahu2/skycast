@@ -19,10 +19,28 @@
 
 .hv-header {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+.hv-header-left,
+.hv-summary-stats {
+  min-height: 74px;
+  border: 1px solid var(--sky-border);
+  border-radius: var(--sky-radius-sm);
+  background: color-mix(in srgb, var(--sky-surface) 72%, transparent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.hv-header-left {
+  flex: 1;
+  min-width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 16px;
 }
 
 .hv-title {
@@ -30,26 +48,36 @@
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--sky-text);
+  margin: 0;
 }
 
 .hv-subtitle {
   font-size: 13px;
   color: var(--sky-muted);
-  margin-top: 3px;
+  margin: 4px 0 0;
   text-transform: capitalize;
 }
 
 .hv-summary-stats {
   display: flex;
-  gap: 20px;
+  align-items: stretch;
+  gap: 0;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .hv-stat {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2px;
+  min-width: 108px;
+  padding: 10px 14px;
+}
+
+.hv-stat + .hv-stat {
+  border-left: 1px solid var(--sky-border);
 }
 
 .hv-stat-label {
@@ -153,6 +181,7 @@
 .hv-icon {
   width: 38px;
   height: 38px;
+  object-fit: contain;
   filter: var(--sky-icon-filter);
 }
 
@@ -216,7 +245,7 @@ body.light .hourly-view {
 }
 
 body.light .hv-sparkline-card {
-  background: #fbf8f2;
+  background: var(--sky-surface);
 }
 
 body.light .hv-grid {
@@ -246,4 +275,9 @@ body.light .hv-stat-val,
 body.light .hv-slot-temp,
 body.light .hv-title {
   color: #2a1a12;
+}
+
+body.light .hv-header-left,
+body.light .hv-summary-stats {
+  background: var(--sky-surface);
 }

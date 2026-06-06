@@ -1,4 +1,4 @@
-.forecast-card {
+/* .forecast-card {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -50,6 +50,74 @@
 }
 .forecast-icon.forecast-sun,
 .forecast-icon.forecast-moon { filter: none; }
+
+.forecast-condition { font-size: 10px; color: var(--sky-muted); }
+
+.forecast-temps { display: flex; align-items: baseline; gap: 2px; font-family: var(--font-display); }
+.temp-high { font-size: 14px; font-weight: 600; color: var(--sky-text); }
+.temp-sep  { font-size: 14px; color: var(--sky-hint); }
+.temp-low  { font-size: 14px; color: var(--sky-muted); }
+
+.forecast-pop { font-size: 9px; color: var(--sky-accent); margin: 1px 0 0; }
+.forecast-loading { color: var(--sky-muted); font-size: 13px; text-align: center; padding: 20px 0; } */
+
+
+
+
+/* --------------------------------------------------------------------------- */
+
+
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.forecast-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--sky-muted);
+  font-family: var(--font-display);
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 7px 4px;
+  border-radius: 8px;
+  background: var(--sky-surface-hover);
+  border: 1px solid var(--sky-border);
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.forecast-day:hover  { border-color: var(--sky-border-strong); }
+.forecast-day.today  { border-color: var(--sky-accent); background: var(--sky-accent-dim); }
+
+.forecast-day-name {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--sky-muted);
+}
+.forecast-day.today .forecast-day-name { color: var(--sky-accent); }
+
+.forecast-icon {
+  width: 52px;
+  height: 52px;
+  filter: var(--sky-icon-filter);
+}
 
 .forecast-condition { font-size: 10px; color: var(--sky-muted); }
 

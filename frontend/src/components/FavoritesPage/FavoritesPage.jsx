@@ -78,28 +78,30 @@ export default function FavoritesPage({
   useEffect(() => {
     let alive = true;
 
-    async function loadFavoriteWeather() {
-      const entries = await Promise.all(
-        favorites.map(async favorite => {
-          try {
-            const weather = await fetchWeather(favorite.city);
-            return [favorite.city.toLowerCase(), weather];
-          } catch {
-            return [favorite.city.toLowerCase(), null];
-          }
-        })
-      );
+    (async () => {
+      async function loadFavoriteWeather() {
+        const entries = await Promise.all(
+          favorites.map(async favorite => {
+            try {
+              const weather = await fetchWeather(favorite.city);
+              return [favorite.city.toLowerCase(), weather];
+            } catch {
+              return [favorite.city.toLowerCase(), null];
+            }
+          })
+        );
 
-      if (alive) {
-        setWeatherByCity(Object.fromEntries(entries));
+        if (alive) {
+          setWeatherByCity(Object.fromEntries(entries));
+        }
       }
-    }
 
-    if (favorites.length) {
-      loadFavoriteWeather();
-    } else {
-      setWeatherByCity({});
-    }
+      if (favorites.length) {
+        await loadFavoriteWeather();
+      } else if (alive) {
+        setWeatherByCity({});
+      }
+    })();
 
     return () => {
       alive = false;

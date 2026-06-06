@@ -40,6 +40,7 @@ export function useWeather() {
       return;
     }
 
+    // No saved city — try geolocation once on first visit.
     if (!navigator.geolocation) {
       return;
     }
@@ -62,8 +63,8 @@ export function useWeather() {
           setWeather(data);
           setSearchedCity(data.city);
 
-        } catch {
-
+        } catch (err) {
+          console.error('Geolocation weather lookup failed:', err);
         } finally {
 
           setLoading(false);
@@ -75,7 +76,7 @@ export function useWeather() {
 
     );
 
-  }, []);
+  }, [storedWeather.weather]);
 
   async function searchWeather(city) {
 

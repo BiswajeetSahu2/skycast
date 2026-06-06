@@ -48,8 +48,11 @@ export default function SearchBar({
     const q = query.trim();
 
     if (q.length < 1) {
-      setSuggestions([]);
-      setActiveIdx(-1);
+      // Defer state updates to avoid cascading renders
+      setTimeout(() => {
+        setSuggestions([]);
+        setActiveIdx(-1);
+      }, 0);
       return;
     }
 
@@ -69,7 +72,10 @@ export default function SearchBar({
           setShowDrop(true);
         }
 
-      } catch { }
+      } catch {
+        setSuggestions([]);
+        setActiveIdx(-1);
+      }
 
     }, 250);
 

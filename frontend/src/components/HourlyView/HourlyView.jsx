@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchForecast } from '../../services/api.js';
+import { getWeatherIcon } from '../../utils/weatherIcons.js';
 import './HourlyView.css';
 
-/* ── SVG Sparkline ────────────────────────────────────────────────── */
-function Sparkline({ slots, convertTemp, isCelsius }) {
-  const svgRef = useRef(null);
+/* Temperature trend chart for the next 8 forecast slots (3-hour steps). */
+function Sparkline({ slots, isCelsius }) {
   const W = 1000, H = 120, PAD = 24;
 
   if (!slots || slots.length < 2) return null;
@@ -14,7 +14,6 @@ function Sparkline({ slots, convertTemp, isCelsius }) {
   const max = Math.max(...temps);
   const range = max - min || 1;
 
-  // Map each slot to an (x, y) point
   const pts = slots.map((s, i) => ({
     x: PAD + (i / (slots.length - 1)) * (W - PAD * 2),
     y: PAD + (1 - (s.temperature - min) / range) * (H - PAD * 2),
@@ -22,7 +21,6 @@ function Sparkline({ slots, convertTemp, isCelsius }) {
     time: s.time,
   }));
 
-  // Smooth polyline path
   const pathD = pts.reduce((d, p, i) => {
     if (i === 0) return `M ${p.x} ${p.y}`;
     const prev = pts[i - 1];
@@ -30,7 +28,6 @@ function Sparkline({ slots, convertTemp, isCelsius }) {
     return `${d} C ${cpx} ${prev.y} ${cpx} ${p.y} ${p.x} ${p.y}`;
   }, '');
 
-  // Area fill below the line
   const areaD = `${pathD} L ${pts[pts.length - 1].x} ${H} L ${pts[0].x} ${H} Z`;
 
   return (
@@ -42,11 +39,8 @@ function Sparkline({ slots, convertTemp, isCelsius }) {
             <stop offset="100%" stopColor="var(--sky-accent)" stopOpacity="0.02" />
           </linearGradient>
         </defs>
-        {/* Area fill */}
         <path d={areaD} fill="url(#sparkGrad)" stroke="none" />
-        {/* Line */}
         <path d={pathD} fill="none" stroke="var(--sky-accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        {/* Dots + temp labels at key points (every 4th) */}
         {pts.filter((_, i) => i % 4 === 0 || i === pts.length - 1).map((p, i) => (
           <g key={i}>
             <circle cx={p.x} cy={p.y} r="4" fill="var(--sky-accent)" stroke="var(--sky-surface-solid)" strokeWidth="2" />
@@ -64,7 +58,6 @@ function Sparkline({ slots, convertTemp, isCelsius }) {
           </g>
         ))}
       </svg>
-      {/* Time axis labels below */}
       <div className="sparkline-axis">
         {pts.filter((_, i) => i % 4 === 0 || i === pts.length - 1).map((p, i) => (
           <span key={i} style={{ left: `${(p.x / W) * 100}%` }} className="sparkline-tick">
@@ -76,38 +69,54 @@ function Sparkline({ slots, convertTemp, isCelsius }) {
   );
 }
 
-/* ── Icon ─────────────────────────────────────────────────────────── */
 function SlotIcon({ icon }) {
-  if (icon === '01d') return (
-    <svg className="hv-icon hv-sun" viewBox="0 0 40 40" fill="none">
-      <circle cx="20" cy="20" r="9" fill="#fbbf24" />
-      {[0, 60, 120, 180, 240, 300].map((deg, i) => {
-        const r = deg * Math.PI / 180, x1 = 20 + 12 * Math.cos(r), y1 = 20 + 12 * Math.sin(r), x2 = 20 + 16 * Math.cos(r), y2 = 20 + 16 * Math.sin(r);
-        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" />;
-      })}
-    </svg>
-  );
-  if (icon === '01n') return (
-    <svg className="hv-icon" viewBox="0 0 40 40" fill="none">
-      <path d="M26 8a12 12 0 11-12 20A9 9 0 0026 8z" fill="#c7d2fe" />
-    </svg>
-  );
-  return <img className="hv-icon" src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt="" />;
+  const conditionByIcon = {
+    '01': 'clear',
+    '02': 'few clouds',
+    '03': 'clouds',
+    '04': 'clouds',
+    '09': 'drizzle',
+    '10': 'rain',
+    '11': 'thunderstorm',
+    '13': 'snow',
+    '50': 'mist',
+  };
+  const iconKey = icon?.slice(0, 2);
+  const condition = conditionByIcon[iconKey] || 'clouds';
+  return <img className="hv-icon" src={getWeatherIcon(condition, icon)} alt="" />;
 }
 
-/* ── Main component ───────────────────────────────────────────────── */
-export default function HourlyView({ city, convertTemp, isFahrenheit, weather }) {
-  const [slots, setSlots] = useState([]);
+export default function HourlyView({ city, convertTemp, isFahrenheit, weather, hourlySlots: cachedSlots }) {
+  const [fetchedSlots, setFetchedSlots] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Prefer slots already fetched on the Today tab; fall back to a local fetch.
+  const slots = cachedSlots?.length ? cachedSlots : fetchedSlots;
+  const needsFetch = !!city && !cachedSlots?.length;
+
   useEffect(() => {
-    if (!city) return;
-    setLoading(true);
-    fetchForecast(city)
-      .then(data => setSlots(data.hourlySlots || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [city]);
+    if (!needsFetch) return undefined;
+
+    let alive = true;
+
+    (async () => {
+      setLoading(true);
+      setFetchedSlots([]);
+
+      try {
+        const data = await fetchForecast(city);
+        if (alive) setFetchedSlots(data.hourlySlots || []);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, [city, needsFetch]);
 
   if (loading) return (
     <div className="hourly-view">
@@ -149,7 +158,7 @@ export default function HourlyView({ city, convertTemp, isFahrenheit, weather })
       {/* Temperature sparkline */}
       <div className="hv-sparkline-card glass-card">
         <p className="hv-section-label">Temperature trend</p>
-        <Sparkline slots={slots} convertTemp={convertTemp} isCelsius={!isFahrenheit} />
+        <Sparkline slots={slots} isCelsius={!isFahrenheit} />
       </div>
 
       {/* Detailed slot cards */}
