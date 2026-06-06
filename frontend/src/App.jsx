@@ -43,7 +43,6 @@ export default function App() {
 
   function handleSearch(city) {
     addRecent(city);
-    // Clear forecast cache so HourlyView does not show the previous city.
     setRainChance(null);
     setHourlyData([]);
     searchWeather(city);
@@ -100,7 +99,6 @@ export default function App() {
     })();
   }, [activeTab, auth.user]);
 
-  // Retry with a refreshed token on 401/403 — stored access tokens expire between visits.
   const runWithFreshToken = useCallback(async (action) => {
     try {
       return await action(auth.accessToken);
@@ -115,7 +113,6 @@ export default function App() {
   }, [auth]);
 
   const loadFavorites = useCallback(async () => {
-    // Access tokens from localStorage expire; runWithFreshToken refreshes before giving up.
     if (!auth.accessToken) {
       setFavorites([]);
       return;
@@ -135,7 +132,6 @@ export default function App() {
     })();
   }, [loadFavorites]);
 
-  // Re-fetch when opening Favorites so the list is fresh even if the initial load failed.
   useEffect(() => {
     (async () => {
       if (activeTab === 'favorites' && auth.accessToken) {
@@ -166,7 +162,6 @@ export default function App() {
 
     try {
       if (isCurrentFavorite) {
-        // Optimistic remove — revert via loadFavorites() in catch if the API fails.
         setFavorites(prev => prev.filter(favorite => favorite.city.toLowerCase() !== cityKey));
         await runWithFreshToken(token => removeFavorite(token, weather.city));
         setFavorites(prev => prev.filter(favorite => favorite.city.toLowerCase() !== cityKey));

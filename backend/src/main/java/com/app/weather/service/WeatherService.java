@@ -187,10 +187,7 @@ public class WeatherService {
 
     private record OneCallExtras(double uvi, double dewPoint) {}
 
-    /**
-     * Fetches UV index and dew point from One Call API 3.0.
-     * Returns sentinel values if the call fails so the frontend can show a dash gracefully.
-     */
+    
     private OneCallExtras fetchOneCallExtras(double lat, double lon) {
         try {
             String url = String.format(

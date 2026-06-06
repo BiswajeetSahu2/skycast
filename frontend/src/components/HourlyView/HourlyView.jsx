@@ -3,7 +3,6 @@ import { fetchForecast } from '../../services/api.js';
 import { getWeatherIcon } from '../../utils/weatherIcons.js';
 import './HourlyView.css';
 
-/* Temperature trend chart for the next 8 forecast slots (3-hour steps). */
 function Sparkline({ slots, isCelsius }) {
   const W = 1000, H = 120, PAD = 24;
 
@@ -90,7 +89,6 @@ export default function HourlyView({ city, convertTemp, isFahrenheit, weather, h
   const [fetchedSlots, setFetchedSlots] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Prefer slots already fetched on the Today tab; fall back to a local fetch.
   const slots = cachedSlots?.length ? cachedSlots : fetchedSlots;
   const needsFetch = !!city && !cachedSlots?.length;
 
@@ -129,7 +127,6 @@ export default function HourlyView({ city, convertTemp, isFahrenheit, weather, h
   return (
     <div className="hourly-view">
 
-      {/* Header summary */}
       <div className="hv-header">
         <div className="hv-header-left">
           <h2 className="hv-title">24-Hour Forecast</h2>
@@ -155,39 +152,30 @@ export default function HourlyView({ city, convertTemp, isFahrenheit, weather, h
         </div>
       </div>
 
-      {/* Temperature sparkline */}
       <div className="hv-sparkline-card glass-card">
         <p className="hv-section-label">Temperature trend</p>
         <Sparkline slots={slots} isCelsius={!isFahrenheit} />
       </div>
 
-      {/* Detailed slot cards */}
       <div className="hv-section-label" style={{ marginTop: 20 }}>Hourly breakdown</div>
       <div className="hv-grid">
         {slots.map((slot, i) => (
           <div key={i} className={`hv-slot glass-card ${i === 0 ? 'now' : ''}`}>
 
-            {/* Time */}
             <div className="hv-slot-time">{i === 0 ? 'Now' : slot.time}</div>
 
-            {/* Icon */}
             <SlotIcon icon={slot.icon} />
 
-            {/* Temp — big */}
             <div className="hv-slot-temp">{convertTemp(slot.temperature)}</div>
 
-            {/* Stats row */}
-            {/* Feels like */}
             <div className="hv-slot-feels">
               Feels {convertTemp(slot.feelsLike)}
             </div>
 
-            {/* Rain Chance */}
             <div className="hv-slot-rain">
               💧 {slot.precipitationChance ?? 0}%
             </div>
 
-            {/* Wind Speed */}
             <div className="hv-slot-wind">
               {slot.windSpeed.toFixed(0)} km/h
             </div>

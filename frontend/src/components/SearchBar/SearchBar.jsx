@@ -48,7 +48,6 @@ export default function SearchBar({
     const q = query.trim();
 
     if (q.length < 1) {
-      // Defer state updates to avoid cascading renders
       setTimeout(() => {
         setSuggestions([]);
         setActiveIdx(-1);

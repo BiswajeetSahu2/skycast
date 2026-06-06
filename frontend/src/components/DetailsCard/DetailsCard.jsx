@@ -114,7 +114,6 @@ function formatTime(unix) {
   });
 }
 
-// Backend uses sentinel doubles when optional fields are missing from OpenWeather.
 function hasDewPoint(dewPoint) {
   return dewPoint != null && dewPoint > -900;
 }

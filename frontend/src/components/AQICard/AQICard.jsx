@@ -10,7 +10,6 @@ const AQI_LEVELS = [
   { max: 5, label: 'Very Poor', color: '#ef4444', desc: 'Health alert - avoid outdoors.' },
 ];
 
-// Full hue spectrum painted along the gauge arc (good -> hazardous, left to right).
 const AQI_HUE_STOPS = [
   { offset: '0%', color: '#22c55e' },
   { offset: '18%', color: '#84cc16' },

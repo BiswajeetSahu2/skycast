@@ -1,0 +1,17 @@
+com\app\weather\config\CorsConfig$1.class
+com\app\weather\dto\ForecastDTO$HourlySlot$HourlySlotBuilder.class
+com\app\weather\config\CacheConfig.class
+com\app\weather\dto\ForecastDTO$DailySummary.class
+com\app\weather\controller\WeatherController$ErrorResponse.class
+com\app\weather\controller\WeatherController.class
+com\app\weather\dto\ForecastDTO$HourlySlot.class
+com\app\weather\dto\ForecastDTO$DailySummary$DailySummaryBuilder.class
+com\app\weather\config\CorsConfig.class
+com\app\weather\service\WeatherService$OneCallExtras.class
+com\app\weather\service\WeatherService.class
+com\app\weather\dto\WeatherDTO.class
+com\app\weather\dto\WeatherDTO$WeatherDTOBuilder.class
+com\app\weather\service\WeatherService$AQIData.class
+com\app\weather\WeatherApplication.class
+com\app\weather\dto\ForecastDTO.class
+com\app\weather\dto\ForecastDTO$ForecastDTOBuilder.class

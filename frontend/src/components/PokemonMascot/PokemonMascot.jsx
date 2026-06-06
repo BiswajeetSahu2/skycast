@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { getPokemon } from './PokemonMap.js';
 import './PokemonMascot.css';
 
-// Image load state is isolated so changing the guardian resets via key={pokemon.id}.
 function PokemonImage({ pokemon }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [imgError, setImgError] = useState(false);
@@ -21,7 +20,6 @@ function PokemonImage({ pokemon }) {
           className="pokemon-img"
           onLoad={() => setImgLoaded(true)}
           onError={() => {
-            // Official artwork is higher quality; fall back to the smaller sprite if it fails.
             if (imgSrc !== pokemon.spriteUrl) {
               setImgLoaded(false);
               setImgSrc(pokemon.spriteUrl);

@@ -40,7 +40,6 @@ export function useWeather() {
       return;
     }
 
-    // No saved city — try geolocation once on first visit.
     if (!navigator.geolocation) {
       return;
     }
